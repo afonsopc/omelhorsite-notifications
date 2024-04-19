@@ -1,17 +1,21 @@
 <?php
 
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type, Authorization');
+
 require 'auth.php';
 require 'database.php';
 require 'environment.php';
 
-$token = getAuthToken();
-
-if ($token === null) {
-    http_response_code(401);
-    exit();
-}
-
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    $token = getAuthToken();
+
+    if ($token === null) {
+        http_response_code(401);
+        exit();
+    }
+
     $user_id = getUserId($token);
 
     if ($user_id === null) {
@@ -45,6 +49,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     echo json_encode($notifications);
     exit();
 } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $token = getAuthToken();
+
+    if ($token === null) {
+        http_response_code(401);
+        exit();
+    }
+
     $requestBody = json_decode(file_get_contents('php://input'), true);
 
     if (
@@ -85,6 +96,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     }
 
     http_response_code(201);
+    exit();
+} elseif ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
     exit();
 } else {
     http_response_code(404);
