@@ -1,0 +1,8 @@
+CREATE TABLE `notifications` (
+    `id` INT PRIMARY KEY AUTO_INCREMENT,
+    `user_id` VARCHAR(255) NOT NULL,
+    `type` VARCHAR(255) NOT NULL,
+    `context` VARCHAR(2500) NOT NULL,
+    `read` BOOLEAN DEFAULT FALSE,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

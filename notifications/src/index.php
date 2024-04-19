@@ -1,0 +1,1 @@
+You can't have happiness without pain, you need a little bit of rain to have a little bit of rainbow.
