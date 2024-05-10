@@ -97,6 +97,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
     http_response_code(201);
     exit();
+} elseif ($_SERVER['REQUEST_METHOD'] === 'PATCH') {
+    $token = getAuthToken();
+
+    if ($token === null) {
+        http_response_code(401);
+        exit();
+    }
+
+    $user_id = getUserId($token);
+
+    if ($user_id === null) {
+        http_response_code(404);
+        exit();
+    }
+
+    $readAllNotifications = readAllNotifications($user_id);
+
+    if ($readAllNotifications === null) {
+        http_response_code(500);
+        exit();
+    }
+
+    http_response_code(200);
+    exit();
 } elseif ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
     exit();

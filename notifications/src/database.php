@@ -110,3 +110,25 @@ function createNotification(string $user_id, string $type, array $context)
 
     return true;
 }
+
+function readAllNotifications(string $user_id)
+{
+    $db = getDatabaseConnection();
+
+    if ($db === null) {
+        return null;
+    }
+
+    $stmt = $db->prepare('UPDATE `notifications` SET `read` = TRUE WHERE `user_id` = ? AND `read` = FALSE');
+    $stmt->bind_param('s', $user_id);
+    $stmt->execute();
+
+    if ($stmt->affected_rows < 1) {
+        return null;
+    }
+
+    $stmt->close();
+    $db->close();
+
+    return true;
+}
