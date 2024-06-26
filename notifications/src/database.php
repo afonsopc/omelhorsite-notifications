@@ -123,10 +123,6 @@ function readAllNotifications(string $user_id)
     $stmt->bind_param('s', $user_id);
     $stmt->execute();
 
-    if ($stmt->affected_rows < 1) {
-        return null;
-    }
-
     $stmt->close();
     $db->close();
 
